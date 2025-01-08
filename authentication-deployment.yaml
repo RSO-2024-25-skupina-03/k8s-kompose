@@ -5,29 +5,31 @@ metadata:
     kompose.cmd: kompose convert
     kompose.version: 1.35.0 (HEAD)
   labels:
-    io.kompose.service: orders
-  name: orders
+    io.kompose.service: authentication
+  name: authentication
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: orders
+      io.kompose.service: authentication
   template:
     metadata:
       annotations:
         kompose.cmd: kompose convert
         kompose.version: 1.35.0 (HEAD)
       labels:
-        io.kompose.service: orders
+        io.kompose.service: authentication
     spec:
       containers:
         - env:
+            - name: JWT_SECRET
+              value: superSecretPassword
             - name: MONGODB_URI
-              value: mongodb://mongo:27017/Orders
+              value: mongodb://mongo:27017/Authentication
             - name: NODE_ENV
               value: test
-          image: orders
-          name: rso-orders
+          image: authentication
+          name: rso-authentication
           ports:
             - containerPort: 3000
               protocol: TCP

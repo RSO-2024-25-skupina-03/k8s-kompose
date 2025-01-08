@@ -5,12 +5,12 @@ metadata:
     kompose.cmd: kompose convert
     kompose.version: 1.35.0 (HEAD)
   labels:
-    io.kompose.service: stock
-  name: stock
+    io.kompose.service: rabbitmq
+  name: rabbitmq
 spec:
   ports:
-    - name: "8000"
-      port: 8000
-      targetPort: 8080
+    - name: "15672"
+      port: 15672
+      targetPort: 15672
   selector:
-    io.kompose.service: stock
+    io.kompose.service: rabbitmq

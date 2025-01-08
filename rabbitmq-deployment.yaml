@@ -5,30 +5,25 @@ metadata:
     kompose.cmd: kompose convert
     kompose.version: 1.35.0 (HEAD)
   labels:
-    io.kompose.service: orders
-  name: orders
+    io.kompose.service: rabbitmq
+  name: rabbitmq
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: orders
+      io.kompose.service: rabbitmq
   template:
     metadata:
       annotations:
         kompose.cmd: kompose convert
         kompose.version: 1.35.0 (HEAD)
       labels:
-        io.kompose.service: orders
+        io.kompose.service: rabbitmq
     spec:
       containers:
-        - env:
-            - name: MONGODB_URI
-              value: mongodb://mongo:27017/Orders
-            - name: NODE_ENV
-              value: test
-          image: orders
-          name: rso-orders
+        - image: rabbitmq:4-management-alpine
+          name: rso-rabbitmq
           ports:
-            - containerPort: 3000
+            - containerPort: 15672
               protocol: TCP
       restartPolicy: Always
