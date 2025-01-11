@@ -25,4 +25,7 @@ spec:
       containers:
         - image: mongo
           name: rso-mongo
+          ports:
+            - containerPort: 27017
+              protocol: TCP
       restartPolicy: Always
