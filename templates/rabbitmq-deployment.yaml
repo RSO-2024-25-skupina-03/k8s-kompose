@@ -39,4 +39,7 @@ spec:
       containers:
         - image: rabbitmq:4-management-alpine
           name: rso-rabbitmq
+          ports:
+            - containerPort: 15672
+              protocol: TCP
       restartPolicy: Always

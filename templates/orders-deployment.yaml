@@ -46,4 +46,7 @@ spec:
               command:
                 - curl -f http://orders:3000/
           name: rso-orders
+          ports:
+            - containerPort: 3000
+              protocol: TCP
       restartPolicy: Always

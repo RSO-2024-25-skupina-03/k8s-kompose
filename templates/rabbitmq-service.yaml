@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -c -v
+    kompose.service.type: clusterip
+    kompose.version: 1.35.0 (HEAD)
+    traefik.enable: "true"
+    traefik.http.middlewares.rabbitmq-strip.stripPrefix.prefixes: /rabbitmq
+    traefik.http.routers.rabbitmq.entrypoints: web
+    traefik.http.routers.rabbitmq.middlewares: rabbitmq-strip
+    traefik.http.routers.rabbitmq.rule: PathPrefix(`/rabbitmq`)
+    traefik.http.services.rabbitmq.loadbalancer.server.port: "15672"
+    traefik.ingress.kubernetes.io/service.nativelb: "true"
+  labels:
+    io.kompose.service: rabbitmq
+  name: rabbitmq
+spec:
+  ports:
+    - name: "15672"
+      port: 15672
+      targetPort: 15672
+  selector:
+    io.kompose.service: rabbitmq
+  type: ClusterIP

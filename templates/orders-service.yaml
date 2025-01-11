@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -c -v
+    kompose.service.type: clusterip
+    kompose.version: 1.35.0 (HEAD)
+    traefik.enable: "true"
+    traefik.http.middlewares.orders-strip.stripPrefix.prefixes: /api/orders
+    traefik.http.routers.orders.entrypoints: web
+    traefik.http.routers.orders.middlewares: orders-strip
+    traefik.http.routers.orders.rule: PathPrefix(`/api/orders`)
+    traefik.ingress.kubernetes.io/service.nativelb: "true"
+  labels:
+    io.kompose.service: orders
+  name: orders
+spec:
+  ports:
+    - name: "8001"
+      port: 8001
+      targetPort: 3000
+  selector:
+    io.kompose.service: orders
+  type: ClusterIP

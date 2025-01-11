@@ -41,4 +41,7 @@ spec:
               command:
                 - curl -f http://stock:8080/
           name: rso-stock
+          ports:
+            - containerPort: 8080
+              protocol: TCP
       restartPolicy: Always

@@ -30,4 +30,7 @@ spec:
               value: /etc/loki_config.yml
           image: macjestoritve.azurecr.io/loki
           name: rso-loki
+          ports:
+            - containerPort: 3100
+              protocol: TCP
       restartPolicy: Always

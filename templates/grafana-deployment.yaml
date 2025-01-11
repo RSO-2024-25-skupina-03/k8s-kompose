@@ -42,4 +42,7 @@ spec:
               value: http://localhost/grafana
           image: macjestoritve.azurecr.io/grafana
           name: rso-grafana
+          ports:
+            - containerPort: 3000
+              protocol: TCP
       restartPolicy: Always

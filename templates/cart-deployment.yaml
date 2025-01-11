@@ -41,4 +41,7 @@ spec:
               command:
                 - curl -f http://cart:8080/
           name: rso-cart
+          ports:
+            - containerPort: 8080
+              protocol: TCP
       restartPolicy: Always

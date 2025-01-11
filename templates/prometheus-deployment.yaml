@@ -37,4 +37,7 @@ spec:
       containers:
         - image: macjestoritve.azurecr.io/prometheus
           name: rso-prometheus
+          ports:
+            - containerPort: 9090
+              protocol: TCP
       restartPolicy: Always

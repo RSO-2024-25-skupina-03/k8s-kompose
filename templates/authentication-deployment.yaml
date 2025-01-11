@@ -50,4 +50,7 @@ spec:
               command:
                 - curl -f http://authentication:3000/
           name: rso-authentication
+          ports:
+            - containerPort: 3000
+              protocol: TCP
       restartPolicy: Always
