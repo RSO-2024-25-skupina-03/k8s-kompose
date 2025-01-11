@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -c -v
+    kompose.service.type: clusterip
+    kompose.version: 1.35.0 (HEAD)
+    traefik.enable: "true"
+    traefik.http.middlewares.cart-strip.stripPrefix.prefixes: /api/cart
+    traefik.http.routers.cart.entrypoints: web
+    traefik.http.routers.cart.middlewares: cart-strip
+    traefik.http.routers.cart.rule: PathPrefix(`/api/cart`)
+    traefik.ingress.kubernetes.io/service.nativelb: "true"
+  labels:
+    io.kompose.service: cart
+  name: cart
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: cart
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -c -v
+        kompose.service.type: clusterip
+        kompose.version: 1.35.0 (HEAD)
+        traefik.enable: "true"
+        traefik.http.middlewares.cart-strip.stripPrefix.prefixes: /api/cart
+        traefik.http.routers.cart.entrypoints: web
+        traefik.http.routers.cart.middlewares: cart-strip
+        traefik.http.routers.cart.rule: PathPrefix(`/api/cart`)
+        traefik.ingress.kubernetes.io/service.nativelb: "true"
+      labels:
+        io.kompose.service: cart
+    spec:
+      containers:
+        - image: macjestoritve.azurecr.io/cart
+          livenessProbe:
+            exec:
+              command:
+                - curl -f http://cart:8080/
+          name: rso-cart
+      restartPolicy: Always

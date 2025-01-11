@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -c -v
+    kompose.service.type: clusterip
+    kompose.version: 1.35.0 (HEAD)
+    traefik.enable: "true"
+    traefik.http.middlewares.rabbitmq-strip.stripPrefix.prefixes: /rabbitmq
+    traefik.http.routers.rabbitmq.entrypoints: web
+    traefik.http.routers.rabbitmq.middlewares: rabbitmq-strip
+    traefik.http.routers.rabbitmq.rule: PathPrefix(`/rabbitmq`)
+    traefik.http.services.rabbitmq.loadbalancer.server.port: "15672"
+    traefik.ingress.kubernetes.io/service.nativelb: "true"
+  labels:
+    io.kompose.service: rabbitmq
+  name: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: rabbitmq
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -c -v
+        kompose.service.type: clusterip
+        kompose.version: 1.35.0 (HEAD)
+        traefik.enable: "true"
+        traefik.http.middlewares.rabbitmq-strip.stripPrefix.prefixes: /rabbitmq
+        traefik.http.routers.rabbitmq.entrypoints: web
+        traefik.http.routers.rabbitmq.middlewares: rabbitmq-strip
+        traefik.http.routers.rabbitmq.rule: PathPrefix(`/rabbitmq`)
+        traefik.http.services.rabbitmq.loadbalancer.server.port: "15672"
+        traefik.ingress.kubernetes.io/service.nativelb: "true"
+      labels:
+        io.kompose.service: rabbitmq
+    spec:
+      containers:
+        - image: rabbitmq:4-management-alpine
+          name: rso-rabbitmq
+      restartPolicy: Always

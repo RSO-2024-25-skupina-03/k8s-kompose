@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+
+spec:
+  rules:
+    - host: ""
+      http:
+        paths:
+          - path: /api/stock
+            pathType: Prefix
+            backend:
+              service:
+                name:  stock
+                port:
+                  number: 8080
+          - path: /api/cart
+            pathType: Prefix
+            backend:
+              service:
+                name:  cart
+                port:
+                  number: 8080
